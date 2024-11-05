@@ -136,13 +136,13 @@ public class Action extends BaseClass {
             // logger.info("Entered text :"+text);
             flag = true;
         } catch (Exception e) {
-            System.out.println("Location Not found");
+            System.out.println("Location Not found "+ ele);
             flag = false;
         } finally {
             if (flag) {
-                System.out.println("Successfully entered value");
+                System.out.println("Successfully entered value "+text);
             } else {
-                System.out.println("Unable to enter value");
+                System.out.println("Unable to enter value "+text);
             }
 
         }
@@ -256,6 +256,24 @@ public class Action extends BaseClass {
                 System.out.println("Option not selected by VisibleText");
             }
         }
+    }
+
+    public static boolean selectItemFromList(WebDriver driver, List<WebElement> itemList, String itemName) {
+        boolean found = false; // Flag to check if item was found
+        for (WebElement item : itemList) {
+            String itemText = item.getText();
+            if (itemText.equalsIgnoreCase(itemName)) {
+                Action.performClick(driver, item);
+                found = true; // Set the flag to true when found
+                System.out.println("Selected item: " + itemText);
+                break; // Exit the loop after clicking
+            }
+        }
+        if (!found) {
+            System.out.println("Item not found: " + itemName);
+            // Optionally return false or throw an exception if needed
+        }
+        return found; // Return whether the item was found and selected
     }
 
     public static boolean JSClick(WebDriver driver, WebElement ele) {
@@ -550,7 +568,7 @@ public class Action extends BaseClass {
      * @return: Boolean (True: If alert preset, False: If no alert)
      *
      */
-    public static boolean Alert(WebDriver driver) {
+    public static boolean alertAccept(WebDriver driver) {
         boolean presentFlag = false;
         Alert alert = null;
 
@@ -566,11 +584,36 @@ public class Action extends BaseClass {
             // Alert not present
             ex.printStackTrace();
         } finally {
+            driver.switchTo().defaultContent();
             if (!presentFlag) {
                 System.out.println("The Alert is handled successfully");
             } else{
-                System.out.println("There was no alert to handle");
+                System.out.println("There was no ed to handle");
             }
+        }
+        return presentFlag;
+    }
+
+    public static boolean alertSendKeys(WebDriver driver, String text) {
+        boolean presentFlag = false;
+        Alert alert = null;
+
+        try {
+            // Switch to the alert
+            alert = driver.switchTo().alert();
+            // Send text to the alert and accept it
+            alert.sendKeys(text);
+            alert.accept();
+            presentFlag = true;
+            System.out.println("Text sent to alert and alert accepted.");
+        } catch (NoAlertPresentException ex) {
+            System.out.println("No alert present to send keys.");
+        } catch (Exception e) {
+            System.out.println("An error occurred while sending text to alert.");
+            e.printStackTrace();
+        } finally {
+            // Switch back to the default content after handling the alert
+            driver.switchTo().defaultContent();
         }
 
         return presentFlag;

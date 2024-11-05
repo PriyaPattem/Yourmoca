@@ -6,12 +6,19 @@ import com.yourmoca.Pages.LoginPage;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends BaseTestClass {
-    LoginPage loginpage;
+    LoginPage loginpage1;
+    LoginPage loginpage2;
 
     @Test
     public void validateLoginTest(){
-        loginpage = new LoginPage();
-        loginpage.validateLogin(getDriver1(), prop.getProperty("username1"), prop.getProperty("password1"));
-        loginpage.validateLogin(getDriver2(), prop.getProperty("username2"), prop.getProperty("password2"));
+        // Instantiate LoginPage with the specific driver for each user
+        loginpage1 = new LoginPage(getDriver1());
+        loginpage2 = new LoginPage(getDriver2());
+
+        // login first user
+        loginpage1.validateLogin( prop.getProperty("username1"), prop.getProperty("password1"));
+
+        // login second user
+        loginpage2.validateLogin( prop.getProperty("username2"), prop.getProperty("password2"));
     }
 }

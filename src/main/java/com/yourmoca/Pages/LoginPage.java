@@ -8,20 +8,22 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends BaseClass {
+    private WebDriver driver;
     @FindBy(xpath="//div[@class=\"MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-auto css-17jney1\"]")
     WebElement Login_signUp_Button;
 
     @FindBy(xpath="//input[@name=\"email\"]")
     WebElement email_ph_field;
 
-    @FindBy(xpath="name=\"password\"")
+    @FindBy(name="password")
     WebElement password;
 
     @FindBy(xpath="//div[@class=\"MuiGrid-root MuiGrid-container MuiGrid-item css-n431dd\"]")
     WebElement loginbutton;
 
-    public LoginPage(){
-        PageFactory.initElements(getDriver1(),this);
+    public LoginPage(WebDriver driver){
+        this.driver = driver;
+        PageFactory.initElements(driver,this);
     }
 
     public String getCurrentURL(){
@@ -29,12 +31,12 @@ public class LoginPage extends BaseClass {
         return currentURL;
     }
 
-    public void validateLogin(WebDriver driver, String username, String pwd){
-        Action.performClick(getDriver1(), Login_signUp_Button);
+    public HomePage validateLogin(String username, String pwd){
+        Action.performClick(driver, Login_signUp_Button);
         Action.EnterText(email_ph_field, username);
         Action.EnterText(password, pwd);
-        Action.performClick(getDriver1(), loginbutton);
-      //  return new HomePage();
+        Action.performClick(driver, loginbutton);
+        return new HomePage(driver);
     }
 
 
