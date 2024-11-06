@@ -44,12 +44,12 @@ public class BaseTestClass extends BaseClass {
         System.out.println("successfully launched first driver");
 
         //set up driver for user2
-        setDriver2(DriverManagerFactory.getDriverType(DriverType.CHROME).createDriver());
+       /* setDriver2(DriverManagerFactory.getDriverType(DriverType.CHROME).createDriver());
         Action.launchUrl(getDriver2(),prop.getProperty("baseUrl"));
         Action.alertSendKeys(getDriver2(),"YM_dev_krify");
         Action.implicitWait(getDriver2(),20);
         Action.pageLoadTimeOut(getDriver2(),20);
-        System.out.println("successfully launched second driver");
+        System.out.println("successfully launched second driver");*/
     }
 
     @BeforeMethod

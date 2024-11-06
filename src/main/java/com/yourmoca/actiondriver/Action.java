@@ -258,7 +258,7 @@ public class Action extends BaseClass {
         }
     }
 
-    public static boolean selectItemFromList(WebDriver driver, List<WebElement> itemList, String itemName) {
+    public static boolean clickItemFromList(WebDriver driver, List<WebElement> itemList, String itemName) {
         boolean found = false; // Flag to check if item was found
         for (WebElement item : itemList) {
             String itemText = item.getText();

@@ -8,12 +8,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends BaseClass {
-    private WebDriver driver;
     @FindBy(xpath = "//a[@class=\"jss1\" and @href=\"/allcategories\"]")
     WebElement AllCategories;
 
     public HomePage(WebDriver driver){
-        this.driver = driver;
+        BaseClass.driver = driver;
         PageFactory.initElements(driver, this);
     }
 

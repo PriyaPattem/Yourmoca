@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class BaseClass {
     public static Properties prop;
-    // public static WebDriver driver;
+    protected static WebDriver driver;
 
     //Declare ThreadLocal driver
     private static final ThreadLocal<WebDriver> user1Driver = new ThreadLocal<>();

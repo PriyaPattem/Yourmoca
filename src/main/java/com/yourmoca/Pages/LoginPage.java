@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends BaseClass {
-    private WebDriver driver;
     @FindBy(xpath="//div[@class=\"MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-auto css-17jney1\"]")
     WebElement Login_signUp_Button;
 
@@ -22,7 +21,7 @@ public class LoginPage extends BaseClass {
     WebElement loginbutton;
 
     public LoginPage(WebDriver driver){
-        this.driver = driver;
+        BaseClass.driver = driver;
         PageFactory.initElements(driver,this);
     }
 
