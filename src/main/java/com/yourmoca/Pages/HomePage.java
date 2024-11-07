@@ -6,9 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePage extends BaseClass {
-    @FindBy(xpath = "//a[@class=\"jss1\" and @href=\"/allcategories\"]")
+    @FindBy(xpath = "//div//a[@href=\"/allcategories\" and not(@class=\"footer_text_style\")]")
     WebElement AllCategories;
 
     public HomePage(WebDriver driver){
@@ -17,6 +18,7 @@ public class HomePage extends BaseClass {
     }
 
     public AllCategoriesPage clickAllCategories(WebDriver driver){
+        Action.explicitWait(driver, AllCategories, 20);
         Action.performClick(driver, AllCategories);
         return new AllCategoriesPage(driver);
     }

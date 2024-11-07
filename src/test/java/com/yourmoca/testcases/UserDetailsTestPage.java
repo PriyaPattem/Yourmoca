@@ -11,6 +11,7 @@ public class UserDetailsTestPage extends BaseTestClass {
     UserDetailsPage userDetailsPage;
     SubCategoryPage subCategoryPage;
     LoginPage loginpage2;
+
     @Test
     public void initiateChat(){
         // Instantiate LoginPage with the specific driver for each user
@@ -20,8 +21,6 @@ public class UserDetailsTestPage extends BaseTestClass {
         userDetailsPage = new UserDetailsPage(getDriver1());
         subCategoryPage = new SubCategoryPage(getDriver1());
 
-       // loginpage2 = new LoginPage(getDriver2());
-
         // login first user
         loginpage1.validateLogin( prop.getProperty("username1"), prop.getProperty("password1"));
         homePage1.clickAllCategories(getDriver1());
@@ -29,7 +28,6 @@ public class UserDetailsTestPage extends BaseTestClass {
         subCategoryPage.selectUserFromList("#Swathifilm");
         userDetailsPage.selectYourMocaChatOption("YourMoca Chat");
 
-        // login second user
-        //loginpage2.validateLogin( prop.getProperty("username2"), prop.getProperty("password2"));
+
     }
 }

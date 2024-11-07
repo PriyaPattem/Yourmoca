@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Properties;
 
 public class BaseTestClass extends BaseClass {
@@ -34,31 +35,31 @@ public class BaseTestClass extends BaseClass {
             e.printStackTrace();
         }
     }
-    public void launchApp() {
-        // set up driver for user1
-        setDriver1(DriverManagerFactory.getDriverType(DriverType.CHROME).createDriver());
-        Action.launchUrl(getDriver1(),prop.getProperty("baseUrl"));
-        Action.alertSendKeys(getDriver1(),"YM_dev_krify");
-        Action.implicitWait(getDriver1(),20);
-        Action.pageLoadTimeOut(getDriver1(),20);
-        System.out.println("successfully launched first driver");
 
-        //set up driver for user2
-       /* setDriver2(DriverManagerFactory.getDriverType(DriverType.CHROME).createDriver());
-        Action.launchUrl(getDriver2(),prop.getProperty("baseUrl"));
-        Action.alertSendKeys(getDriver2(),"YM_dev_krify");
-        Action.implicitWait(getDriver2(),20);
-        Action.pageLoadTimeOut(getDriver2(),20);
-        System.out.println("successfully launched second driver");*/
-    }
 
     @BeforeMethod
-    public void setUp(){
-        launchApp();
+    public void setUp(Method method){
+        if (method.isAnnotationPresent(MultipleDriverTest.class)) {
+            // Initialize both drivers if @MultipleDriverTest is present
+            launchApp();
+        } else {
+            // Set up only one driver
+            setDriver1(DriverManagerFactory.getDriverType(DriverType.CHROME).createDriver());
+            Action.launchUrl(getDriver1(), prop.getProperty("baseUrl"));
+            Action.alertSendKeys(getDriver1(), "YM_dev_krify");
+            Action.implicitWait(getDriver1(), 20);
+            Action.pageLoadTimeOut(getDriver1(), 20);
+            System.out.println("successfully launched single driver");
+        }
     }
 
     @AfterMethod
-    public void tearDown(){
-        quitDrivers();
+    public void tearDown(Method method) {
+        // Quit drivers conditionally based on setup
+        if (method.isAnnotationPresent(MultipleDriverTest.class)) {
+            quitDrivers();  // Quit both drivers
+        } else if (getDriver1() != null) {
+            getDriver1().quit();  // Quit only driver1
+        }
     }
 }

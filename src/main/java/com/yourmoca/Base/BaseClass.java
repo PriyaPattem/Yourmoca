@@ -31,6 +31,23 @@ public class BaseClass {
     public static WebDriver getDriver2(){
         return user2Driver.get();
     }
+    public void launchApp() {
+        // set up driver for user1
+        setDriver1(DriverManagerFactory.getDriverType(DriverType.CHROME).createDriver());
+        Action.launchUrl(getDriver1(),prop.getProperty("baseUrl"));
+        Action.alertSendKeys(getDriver1(),"YM_dev_krify");
+        Action.implicitWait(getDriver1(),20);
+        Action.pageLoadTimeOut(getDriver1(),20);
+        System.out.println("successfully launched first driver");
+
+        //set up driver for user2
+        setDriver2(DriverManagerFactory.getDriverType(DriverType.CHROME).createDriver());
+        Action.launchUrl(getDriver2(),prop.getProperty("baseUrl"));
+        Action.alertSendKeys(getDriver2(),"YM_dev_krify");
+        Action.implicitWait(getDriver2(),20);
+        Action.pageLoadTimeOut(getDriver2(),20);
+        System.out.println("successfully launched second driver");
+    }
     public void quitDrivers() {
         if (getDriver1() != null) {
             getDriver1().quit();
